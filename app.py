@@ -1,3 +1,4 @@
+from email.errors import HeaderDefect
 from flask import Flask, render_template, request
 app = Flask(__name__)
 kinoko_count=3
@@ -37,6 +38,8 @@ def answer():
         # メッセージのフォーマット
         m = re.sub(r'\*(.+)\*', r'<strong>\1</strong>', m)
         m = re.sub(r'(\d{2,3})-\d+-\d+', r'\1-****-****', m)
+
+        m=re.sub(r'(https?://[a-zA-Z0-9-_^/?:&=%+#.]+)', r'<a href="\1">\1</a>',m)
 
 
         message_html+=f'<div class="alert {c}" role="alert">{m}</div>\n'
